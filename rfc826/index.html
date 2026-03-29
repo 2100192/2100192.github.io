@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARP Inspector - RFC 826</title>
+	<link rel="stylesheet" href="../style.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <header>
+        <a href="../index.html" class="btn btn-theme" style="position: absolute; left: 0; top: 0; text-decoration: none; display: flex; align-items: center; height: 100%; box-sizing: border-box;">
+            &larr; Portal
+        </a>
+        <h1>ARP Datagram Inspector</h1>
+        <p class="subtitle">RFC 826 Ethernet Address Resolution Protocol Simulation</p>
+    </header>
+
+    <div class="control-bar">
+        <div class="node-group">
+            <strong>Host A (192.168.1.10)</strong>
+            <button class="btn" id="btn-send" onclick="runArpScenario()">Send Data to 192.168.1.20</button>
+        </div>
+
+        <div class="node-group">
+            <div style="background: var(--bg-body); padding: 4px 10px; border-radius: 4px; border: 1px solid var(--border-color); font-family: monospace; font-size: 11px;">
+                <span style="color: var(--accent-blue); font-weight: bold;">Host A ARP Cache:</span><br>
+                <span id="arp-cache-a">Empty</span>
+            </div>
+            <button class="btn btn-theme" id="btn-theme" onclick="toggleTheme()">🌙 Dark</button>
+            <button class="btn btn-danger" onclick="resetSimulation()">Clear Cache & Reset</button>
+        </div>
+
+        <div class="node-group">
+            <span class="state-badge" id="net-status">IDLE</span>
+        </div>
+    </div>
+
+    <div class="layout">
+        <div class="flow-container">
+            <h3>Network Traffic Log</h3>
+            <div id="packet-list">
+                <p id="empty-log-msg" class="empty-msg">No ARP traffic yet.</p>
+            </div>
+        </div>
+
+        <div class="inspector">
+            <div class="diagram-container">
+                <h3>RFC 826 Header Diagram</h3>
+                <div id="diagram-content">
+                    <p class="empty-msg">Select an ARP message to inspect.</p>
+                </div>
+            </div>
+
+            <div class="hex-container">
+                <div class="hex-header">
+                    <div style="width: 45px;">Offset</div>
+                    <div style="flex: 1;">Hexadecimal</div>
+                    <div style="width: 120px;">ASCII</div>
+                </div>
+                <div id="hex-content"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="floating-balloon" class="floating-balloon">
+        <strong id="balloon-title">Field Name</strong>
+        <p id="balloon-desc">Description.</p>
+    </div>
+</body>
+</html>

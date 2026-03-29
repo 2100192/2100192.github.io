@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTTP Inspector - RFC 9110</title>
+    <link rel="stylesheet" href="../style.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <header>
+        <a href="../index.html" class="btn btn-theme" style="position: absolute; left: 0; top: 0; text-decoration: none; display: flex; align-items: center; height: 100%; box-sizing: border-box;">
+            &larr; Portal
+        </a>
+        <h1>HTTP Message Inspector</h1>
+        <p class="subtitle">RFC 9110 HTTP Semantics and Traffic Simulation</p>
+    </header>
+
+    <div class="control-bar">
+        <div class="node-group">
+            <strong>Simulation Scenario</strong>
+            <select id="sim-scenario" style="padding:4px; margin-left: 10px;">
+                <option value="get_200">1. GET Request (200 OK)</option>
+                <option value="post_201">2. POST Request w/ JSON (201 Created)</option>
+                <option value="get_404">3. GET Request (404 Not Found)</option>
+            </select>
+        </div>
+
+        <div class="node-group">
+            <button class="btn btn-theme" id="btn-theme" onclick="toggleTheme()">🌙 Dark Mode</button>
+            <button class="btn" id="btn-send" onclick="runHttpScenario()">Run Scenario</button>
+            <button class="btn btn-danger" onclick="resetSimulation()">Clear Log</button>
+        </div>
+
+        <div class="node-group">
+            <span class="state-badge" id="net-status">IDLE</span>
+        </div>
+    </div>
+
+    <div class="layout">
+        <div class="flow-container">
+            <h3>HTTP Traffic Log</h3>
+            <div id="packet-list">
+                <p id="empty-log-msg" class="empty-msg">No HTTP traffic recorded.</p>
+            </div>
+        </div>
+
+        <div class="inspector">
+            <div class="diagram-container">
+                <h3>Message Structure (Text)</h3>
+                <div id="diagram-content">
+                    <p class="empty-msg">Select an HTTP message to inspect.</p>
+                </div>
+            </div>
+
+            <div class="hex-container">
+                <div class="hex-header">
+                    <div style="width: 45px;">Offset</div>
+                    <div style="flex: 1;">Hexadecimal</div>
+                    <div style="width: 120px;">ASCII</div>
+                </div>
+                <div id="hex-content"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="floating-balloon" class="floating-balloon">
+        <strong id="balloon-title">Field Name</strong>
+        <p id="balloon-desc">Description.</p>
+    </div>
+</body>
+</html>

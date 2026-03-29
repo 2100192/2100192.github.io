@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DHCP Inspector - RFC 2131</title>
+    <link rel="stylesheet" href="../style.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <header>
+        <a href="../index.html" class="btn btn-theme" style="position: absolute; left: 0; top: 0; text-decoration: none; display: flex; align-items: center; height: 100%; box-sizing: border-box;">
+            &larr; Portal
+        </a>
+        <h1>DHCP Datagram Inspector</h1>
+        <p class="subtitle">RFC 2131 Dynamic Host Configuration Protocol Simulation</p>
+    </header>
+
+    <div class="control-bar">
+        <div class="node-group">
+            <strong>DHCP Client</strong>
+            <span class="state-badge" id="client-state">INIT</span>
+            <span id="client-ip" class="socket-info" style="margin-left: 5px;">(0.0.0.0)</span>
+            <button class="btn" id="btn-dora" onclick="runDORA()">Start DHCP (DORA)</button>
+            <button class="btn" id="btn-release" onclick="releaseLease()" disabled>Release Lease</button>
+        </div>
+
+        <div class="node-group">
+            <button class="btn btn-theme" id="btn-theme" onclick="toggleTheme()">🌙 Dark</button>
+            <button class="btn btn-danger" onclick="resetSimulation()">Reset Network</button>
+        </div>
+
+        <div class="node-group">
+            <span class="state-badge" id="server-state">IDLE</span>
+            <strong>DHCP Server <span class="socket-info">(192.168.1.1)</span></strong>
+        </div>
+    </div>
+
+    <div class="layout">
+        <div class="flow-container">
+            <h3>Network Traffic Log</h3>
+            <div id="packet-list">
+                <p id="empty-log-msg" class="empty-msg">No DHCP traffic yet.</p>
+            </div>
+        </div>
+
+        <div class="inspector">
+            <div class="diagram-container">
+                <h3>RFC 2131 Header Diagram</h3>
+                <div id="diagram-content">
+                    <p class="empty-msg">Select a DHCP message to inspect.</p>
+                </div>
+            </div>
+
+            <div class="hex-container">
+                <div class="hex-header">
+                    <div style="width: 45px;">Offset</div>
+                    <div style="flex: 1;">Hexadecimal</div>
+                    <div style="width: 120px;">ASCII</div>
+                </div>
+                <div id="hex-content"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="floating-balloon" class="floating-balloon">
+        <strong id="balloon-title">Field Name</strong>
+        <p id="balloon-desc">Description.</p>
+    </div>
+</body>
+</html>

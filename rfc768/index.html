@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UDP Inspector - RFC 768</title>
+	<link rel="stylesheet" href="../style.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <header>
+        <a href="../index.html" class="btn btn-theme" style="position: absolute; left: 0; top: 0; text-decoration: none; display: flex; align-items: center; height: 100%; box-sizing: border-box;">
+            &larr; Portal
+        </a>
+        <h1>UDP Datagram Inspector</h1>
+        <p class="subtitle">RFC 768 User Datagram Protocol & Unreliable Delivery Simulation</p>
+    </header>
+
+    <div class="control-bar">
+        <div class="node-group">
+            <strong>Datagram Configuration</strong>
+            <div style="display:flex; gap:8px; align-items:center;">
+                <label style="font-size:12px;">Src Port: 
+                    <input type="number" id="input-sport" value="5353" min="1" max="65535" style="width:60px; padding:2px;">
+                </label>
+                
+                <label style="font-size:12px;">Dst Port: 
+                    <input type="number" id="input-dport" value="53" min="1" max="65535" style="width:60px; padding:2px;">
+                </label>
+
+                <label style="font-size:12px; margin-left: 10px;">Payload: 
+                    <input type="text" id="input-data" value="DNS Query Example" style="width:140px; padding:2px;">
+                </label>
+                
+                <label style="font-size:12px; margin-left: 10px; color: var(--danger-bg); font-weight: bold;" title="Simulates the unreliable nature of UDP">Network Drop Rate: 
+                    <select id="input-drop-rate" style="padding:2px; border-color: var(--danger-bg);">
+                        <option value="0">0% (Perfect Network)</option>
+                        <option value="20">20% Loss</option>
+                        <option value="50">50% Loss</option>
+                        <option value="80">80% Loss</option>
+                    </select>
+                </label>
+            </div>
+        </div>
+
+        <div class="node-group">
+            <button class="btn btn-theme" id="btn-theme" onclick="toggleTheme()">🌙 Dark Mode</button>
+            <button class="btn" id="btn-send" onclick="sendUdpDatagram()">Send Datagram</button>
+            <button class="btn btn-danger" onclick="resetSimulation()">Clear Log</button>
+        </div>
+
+        <div class="node-group">
+            <span class="state-badge" id="net-status">IDLE</span>
+        </div>
+    </div>
+
+    <div class="layout">
+        <div class="flow-container">
+            <h3>Network Traffic Log</h3>
+            <div id="packet-list">
+                <p id="empty-log-msg" class="empty-msg">No UDP traffic yet.</p>
+            </div>
+        </div>
+
+        <div class="inspector">
+            <div class="diagram-container">
+                <h3>RFC 768 Header Diagram</h3>
+                <div id="diagram-content">
+                    <p class="empty-msg">Select a UDP datagram to inspect.</p>
+                </div>
+            </div>
+
+            <div class="hex-container">
+                <div class="hex-header">
+                    <div style="width: 45px;">Offset</div>
+                    <div style="flex: 1;">Hexadecimal</div>
+                    <div style="width: 120px;">ASCII</div>
+                </div>
+                <div id="hex-content"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="floating-balloon" class="floating-balloon">
+        <strong id="balloon-title">Field Name</strong>
+        <p id="balloon-desc">Description.</p>
+    </div>
+</body>
+</html>

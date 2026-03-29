@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TCP Emulator & Datagram Inspector</title>
+    <link rel="stylesheet" href="../style.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <header>
+        <a href="../index.html" class="btn btn-theme" style="position: absolute; left: 0; top: 0; text-decoration: none; display: flex; align-items: center; height: 100%; box-sizing: border-box;">
+            &larr; Back to Portal
+        </a>
+        
+        <h1>TCP Emulator & Datagram Inspector</h1>
+        <p class="subtitle">RFC 9293 Real-time Traffic Simulation with Automatic Teardown</p>
+    </header>
+
+    <div class="control-bar">
+        <div class="node-group">
+            <strong>Host A <span id="client-ip" class="socket-info"></span></strong>
+            <span class="state-badge" id="client-state">CLOSED</span>
+            <button class="btn" id="btn-active-open" onclick="activeOpen()">Active OPEN (SYN)</button>
+            <button class="btn" id="btn-send-data" onclick="sendData()" disabled>SEND (PSH)</button>
+            <button class="btn" id="btn-client-close" onclick="clientClose()" disabled>CLOSE (FIN)</button>
+        </div>
+
+        <div class="node-group">
+            <button class="btn btn-theme" id="btn-theme" onclick="toggleTheme()">🌙 Dark Mode</button>
+            <button class="btn btn-danger" onclick="resetSimulation()">Reset Simulation</button>
+        </div>
+
+        <div class="node-group">
+            <button class="btn" id="btn-passive-open" onclick="passiveOpen()">Passive OPEN (LISTEN)</button>
+            <button class="btn" id="btn-server-close" onclick="serverClose()" disabled>CLOSE (FIN)</button>
+            <span class="state-badge" id="server-state">CLOSED</span>
+            <strong>Host B <span id="server-ip" class="socket-info"></span></strong>
+        </div>
+    </div>
+
+    <div class="layout">
+        <div class="flow-container">
+            <h3>Network Traffic</h3>
+            <div id="packet-list">
+                <p id="empty-log-msg" class="empty-msg">Traffic log is empty.</p>
+            </div>
+        </div>
+
+        <div class="inspector">
+            <div class="diagram-container">
+                <h3>Headers Diagram</h3>
+                <div id="diagram-content">
+                    <p class="empty-msg">Select a packet to inspect.</p>
+                </div>
+            </div>
+
+            <div class="hex-container">
+                <div class="hex-header">
+                    <div style="width: 45px;">Offset</div>
+                    <div style="flex: 1;">Hexadecimal</div>
+                    <div style="width: 120px;">ASCII</div>
+                </div>
+                <div id="hex-content"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="floating-balloon" class="floating-balloon">
+        <strong id="balloon-title">Field Name</strong>
+        <p id="balloon-desc">Description goes here.</p>
+    </div>
+</body>
+</html>

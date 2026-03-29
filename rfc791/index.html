@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IPv4 Inspector - RFC 791</title>
+	<link rel="stylesheet" href="../style.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <header>
+        <a href="../index.html" class="btn btn-theme" style="position: absolute; left: 0; top: 0; text-decoration: none; display: flex; align-items: center; height: 100%; box-sizing: border-box;">
+            &larr; Portal
+        </a>
+        <h1>IPv4 Datagram Inspector</h1>
+        <p class="subtitle">RFC 791 Header Manipulation & QoS Simulation</p>
+    </header>
+
+    <div class="control-bar">
+        <div class="node-group">
+            <strong>IPv4 Parameters</strong>
+            <div style="display:flex; gap:8px; align-items:center;">
+                <input type="number" id="input-size" title="Payload Size (Bytes)" style="width:60px; padding:2px;">
+                <select id="input-mtu" title="Network MTU" style="padding:2px;">
+                    <option value="1500">MTU 1500</option>
+                    <option value="576">MTU 576</option>
+                    <option value="128">MTU 128</option>
+                </select>
+                
+                <label style="font-size:12px; margin-left:10px;">TTL: 
+                    <input type="number" id="input-ttl" value="5" min="1" max="255" style="width:40px; padding:2px;" title="Time to Live">
+                </label>
+                
+                <label style="font-size:12px;">Hops: 
+                    <input type="number" id="input-hops" value="4" min="1" max="255" style="width:40px; padding:2px;" title="Network Hops (Routers in path)">
+                </label>
+                
+                <label style="font-size:12px; margin-left:10px;">TOS: 
+                    <select id="input-tos" style="padding:2px;" title="Type of Service (Affects UI speed)">
+                        <option value="0">0 (Routine - Slow)</option>
+                        <option value="8">8 (High Throughput - Medium)</option>
+                        <option value="16">16 (Low Delay - Fast)</option>
+                    </select>
+                </label>
+            </div>
+        </div>
+
+        <div class="node-group">
+            <button class="btn btn-theme" id="btn-theme" onclick="toggleTheme()">🌙 Dark</button>
+            <button class="btn" id="btn-send" onclick="processDatagram()">Send Datagram</button>
+            <button class="btn btn-danger" onclick="resetSimulation()">Reset</button>
+        </div>
+
+        <div class="node-group">
+            <span class="state-badge" id="net-status">IDLE</span>
+        </div>
+    </div>
+
+    <div class="layout">
+        <div class="flow-container">
+            <h3>Output Traffic (Fragments)</h3>
+            <div id="packet-list">
+                <p id="empty-log-msg" class="empty-msg">No traffic yet.</p>
+            </div>
+        </div>
+
+        <div class="inspector">
+            <div class="diagram-container">
+                <h3>Headers Diagram</h3>
+                <div id="diagram-content">
+                    <p class="empty-msg">Select a fragment to inspect.</p>
+                </div>
+            </div>
+
+            <div class="hex-container">
+                <div class="hex-header">
+                    <div style="width: 45px;">Offset</div>
+                    <div style="flex: 1;">Hexadecimal</div>
+                    <div style="width: 120px;">ASCII</div>
+                </div>
+                <div id="hex-content"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="floating-balloon" class="floating-balloon">
+        <strong id="balloon-title">Field Name</strong>
+        <p id="balloon-desc">Description.</p>
+    </div>
+</body>
+</html>

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Network Protocol Emulators</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .top-bar {
+            width: 100%;
+            max-width: 1000px;
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 20px;
+        }
+        .btn-theme {
+            background: transparent;
+            color: var(--text-main);
+            border: 1px solid var(--border);
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.2s;
+        }
+        .btn-theme:hover {
+            background: var(--border);
+        }
+        .ai-disclaimer {
+            margin-top: 50px;
+            text-align: center;
+            font-size: 13px;
+            color: #64748b;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="top-bar">
+        <button class="btn-theme" id="btn-theme" onclick="toggleTheme()">🌙 Dark Mode</button>
+    </div>
+
+    <header>
+        <h1>Interactive Protocol Emulators</h1>
+        <p>A collection of client-side network state machines and packet inspectors based on IETF Standards.</p>
+    </header>
+
+    <main class="grid-container">
+        <a href="./rfc826/index.html" class="card">
+            <div class="card-header">RFC 826</div>
+            <div class="card-body">
+                <h2>Address Resolution Protocol (ARP)</h2>
+                <p>Simulate MAC address discovery. Broadcast ARP Requests, process ARP Replies, and inspect the hardware and protocol address mappings.</p>
+            </div>
+            <div class="card-footer">Launch Emulator &rarr;</div>
+        </a>
+
+        <a href="./rfc791/index.html" class="card">
+            <div class="card-header">RFC 791</div>
+            <div class="card-body">
+                <h2>Internet Protocol (IPv4)</h2>
+                <p>Explore the IPv4 header, manipulate fields like TTL and TOS, and simulate datagram fragmentation when the network MTU is exceeded.</p>
+            </div>
+            <div class="card-footer">Launch Emulator &rarr;</div>
+        </a>
+
+        <a href="./rfc792/index.html" class="card">
+            <div class="card-header">RFC 792</div>
+            <div class="card-body">
+                <h2>Internet Control Message Protocol (ICMP)</h2>
+                <p>Simulate Ping (Echo) requests and network error reporting (Time Exceeded, Destination Unreachable). Inspect how ICMP encapsulates original datagrams.</p>
+            </div>
+            <div class="card-footer">Launch Emulator &rarr;</div>
+        </a>
+
+        <a href="./rfc768/index.html" class="card">
+            <div class="card-header">RFC 768</div>
+            <div class="card-body">
+                <h2>User Datagram Protocol (UDP)</h2>
+                <p>Simulate stateless datagram transmission. Inspect the minimal 8-byte header and simulate network unreliability through packet loss.</p>
+            </div>
+            <div class="card-footer">Launch Emulator &rarr;</div>
+        </a>
+
+        <a href="./rfc9293/index.html" class="card">
+            <div class="card-header">RFC 9293</div>
+            <div class="card-body">
+                <h2>Transmission Control Protocol (TCP)</h2>
+                <p>Simulate the TCP state machine, 3-way handshake, data transfer, and connection teardown. Inspect headers and hex dumps in real-time.</p>
+            </div>
+            <div class="card-footer">Launch Emulator &rarr;</div>
+        </a>
+
+        <a href="./rfc2131/index.html" class="card">
+            <div class="card-header">RFC 2131</div>
+            <div class="card-body">
+                <h2>Dynamic Host Configuration Protocol (DHCP)</h2>
+                <p>Simulate the DORA process (Discover, Offer, Request, ACK). Inspect the BOOTP header structure, client states, and DHCP options.</p>
+            </div>
+            <div class="card-footer">Launch Emulator &rarr;</div>
+        </a>
+
+        <a href="./rfc1035/index.html" class="card">
+            <div class="card-header">RFC 1035</div>
+            <div class="card-body">
+                <h2>Domain Name System (DNS)</h2>
+                <p>Simulate DNS resolution. Generate standard queries (A, MX, CNAME) and inspect the binary message format, header flags, and resource record compression.</p>
+            </div>
+            <div class="card-footer">Launch Emulator &rarr;</div>
+        </a>
+
+        <a href="./rfc9110/index.html" class="card">
+            <div class="card-header">RFC 9110</div>
+            <div class="card-body">
+                <h2>Hypertext Transfer Protocol (HTTP)</h2>
+                <p>Explore HTTP semantics. Simulate GET and POST requests, analyze status codes (200, 404, 201), and inspect plaintext and hex dumps of CRLF-terminated headers.</p>
+            </div>
+            <div class="card-footer">Launch Emulator &rarr;</div>
+        </a>
+
+        <a href="./rfc4251/index.html" class="card">
+            <div class="card-header">RFC 4251</div>
+            <div class="card-body">
+                <h2>Secure Shell (SSH) Architecture</h2>
+                <p>Simulate the SSH protocol layers: Transport (Key Exchange), User Authentication, and Connection (Channels). Inspect the encrypted binary packet structure.</p>
+            </div>
+            <div class="card-footer">Launch Emulator &rarr;</div>
+        </a>
+    </main>
+
+    <footer class="ai-disclaimer">
+        <p>Developed with the assistance of Artificial Intelligence.</p>
+    </footer>
+
+    <script>
+        // Script to manage Dark Mode on the Portal
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+            const btn = document.getElementById('btn-theme');
+            
+            if (document.body.classList.contains('dark-mode')) {
+                btn.innerText = '☀️ Light Mode';
+                localStorage.setItem('emulator_theme', 'dark');
+            } else {
+                btn.innerText = '🌙 Dark Mode';
+                localStorage.setItem('emulator_theme', 'light');
+            }
+        }
+
+        // Check saved preference on page load
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('emulator_theme');
+            if (savedTheme === 'dark') {
+                document.body.classList.add('dark-mode');
+                document.getElementById('btn-theme').innerText = '☀️ Light Mode';
+            }
+        });
+    </script>
+</body>
+</html>
